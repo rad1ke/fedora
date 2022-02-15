@@ -24,9 +24,8 @@ EOT
 chown $LocalUsername:$LocalUsername /home/$LocalUsername/.bashrc
 
 cat <<EOT > /home/$LocalUsername/.bash_profile
-. .bashrc
-if [ "$(tty)" = "/dev/tty1" ]; then
-	exec sway
+if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+  exec sway
 fi
 EOT
 chown $LocalUsername:$LocalUsername /home/$LocalUsername/.bash_profile
