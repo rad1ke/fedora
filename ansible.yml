@@ -138,13 +138,19 @@
       ansible.builtin.copy:
         src: .bashrc
         dest: /home/{{ local_username }}/.bashrc
+        owner: "{{ local_username }}"
+        group: "{{ local_username }}"
 
     - name: Set up .bash_profile
       ansible.builtin.copy:
         src: .bash_profile
         dest: /home/{{ local_username }}/.bash_profile
+        owner: "{{ local_username }}"
+        group: "{{ local_username }}"
 
     - name: Set up .xinitrc
       ansible.builtin.copy:
         src: .xinitrc
         dest: /home/{{ local_username }}/.xinitrc
+        owner: "{{ local_username }}"
+        group: "{{ local_username }}"
