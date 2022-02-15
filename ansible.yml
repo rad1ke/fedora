@@ -65,6 +65,7 @@
           - pavucontrol
           - NetworkManager
           - NetworkManager-openconnect
+          - NetworkManager-openconnect-gnome
           - gsettings-desktop-schemas
           - arc-theme
           - papirus-icon-theme
