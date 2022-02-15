@@ -5,7 +5,7 @@ grep -qF -- "deltarpm=true" "/etc/dnf/dnf.conf" || echo "deltarpm=true" >> "/etc
 dnf upgrade -y
 
 dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
-dnf install flatpak gsettings-desktop-schemas arc-theme papirus-icon-theme sway wofi waybar swayidle swaylock pulseaudio-utils playerctl pavucontrol NetworkManager-tui udiskie wl-clipboard clipman htop ImageMagick ansible git zip net-tools pwgen qrencode openconnect -y
+dnf install gsettings-desktop-schemas arc-theme papirus-icon-theme sway wofi waybar swayidle swaylock pulseaudio-utils playerctl pavucontrol NetworkManager-tui udiskie wl-clipboard clipman htop ImageMagick ansible git zip net-tools pwgen qrencode openconnect chromium telegram-desktop mpv remmina -y
 
 LocalUsername="user"
 GitUsername="radtkedev"
@@ -39,5 +39,3 @@ gsettings set org.gnome.desktop.peripherals.mouse accel-profile adaptive
 gsettings set org.gnome.desktop.interface gtk-theme "Arc-Darker"
 gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
 
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install org.chromium.Chromium org.videolan.VLC org.remmina.Remmina org.telegram.desktop com.microsoft.Teams -y
