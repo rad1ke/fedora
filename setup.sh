@@ -38,7 +38,4 @@ gsettings set org.gnome.desktop.interface gtk-theme "Arc-Darker"
 gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install org.mozilla.firefox com.spotify.Client org.videolan.VLC org.remmina.Remmina org.telegram.desktop com.microsoft.Teams io.dbeaver.DBeaverCommunity -y
-
-flatpak remote-add flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-flatpak install flathub-beta com.microsoft.Edge -y
+flatpak install org.chromium.Chromium com.spotify.Client org.videolan.VLC org.remmina.Remmina org.telegram.desktop com.microsoft.Teams io.dbeaver.DBeaverCommunity -y
