@@ -1,0 +1,150 @@
+---
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    local_username: user
+    git_username: radtkedev
+    git_email: mail@radtke.dev
+    git_default_branch: master 
+  tasks:
+    - name: Reduce GRUB timeout
+      register: grub_timeout
+      lineinfile:
+        path: /etc/default/grub
+        regexp: "^GRUB_TIMEOUT="
+        line: "GRUB_TIMEOUT=1"
+
+    - name: Update GRUB
+      when: grub_timeout.changed
+      shell: "grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg"
+
+    - name: Configure dnf
+      ansible.builtin.copy:
+        dest: /etc/dnf.conf
+        content: |
+          [main]
+          gpgcheck=1
+          installonly_limit=3
+          clean_requirements_on_remove=True
+          best=False
+          skip_if_unavailable=True
+          max_parallel_downloads=10
+          deltarpm=true
+ 
+    - name: Enable RPM Fusion Free repository
+      dnf:
+        name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+        state: present
+
+    - name: Enable RPM Fusion Non-Free repository
+      dnf:
+        name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+        state: present
+
+    - name: Install base packages
+      dnf:
+        name: 
+          - htop
+          - ImageMagick
+          - zip
+          - net-tools
+          - pwgen
+          - qrencode 
+          - chromium
+          - telegram-desktop
+          - mpv
+          - remmina
+          - i3
+          - i3status
+          - dmenu
+          - compton
+          - playerctl
+          - pulseaudio-utils
+          - pavucontrol
+          - NetworkManager
+          - NetworkManager-openconnect
+          - gsettings-desktop-schemas
+          - arc-theme
+          - papirus-icon-theme
+        state: present
+        update_cache: true
+
+    - name: Set git username
+      become: yes
+      become_user: "{{ local_username }}"
+      git_config:
+        name: user.name
+        value: "{{ git_username }}"
+        scope: global
+
+    - name: Set git email
+      become: yes
+      become_user: "{{ local_username }}"
+      git_config:
+        name: user.email
+        value: "{{ git_email }}"
+        scope: global
+
+    - name: Setup git default branch
+      become: yes
+      become_user: "{{ local_username }}"
+      git_config:
+        name: init.defaultBranch
+        value: "{{ git_default_branch }}"
+        scope: global
+
+    - name: Setup client ssh folder
+      ansible.builtin.file:
+        path: "/home/{{ local_username }}/.ssh"
+        owner: "{{ local_username }}"
+        group: "{{ local_username }}"
+        state: directory
+        mode: 0700
+
+    - name: Configure chrony NTP
+      register: chrony
+      ansible.builtin.copy:
+        dest: /etc/chrony.conf
+        content: |
+          pool time.cloudflare.com iburst nts
+          driftfile /var/lib/chrony/drift
+          makestep 1.0 3
+          rtcsync
+          keyfile /etc/chrony.keys
+          ntsdumpdir /var/lib/chrony
+          leapsectz right/UTC
+          logdir /var/log/chrony
+
+    - name: Restart chrony
+      when: chrony.changed
+      ansible.builtin.service:
+        name: chronyd
+        state: restarted
+
+    - name: Set up autologin (1/2)
+      ansible.builtin.file:
+        name: /etc/systemd/system/getty@tty1.service.d
+        state: directory
+
+    - name: Set up autologin (2/2)
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/getty@tty1.service.d/override.conf
+        content: |
+          [Service]
+          ExecStart=
+          ExecStart=-/usr/sbin/agetty --autologin {{ local_username }} --noclear %I $TERM"
+
+    - name: Set up .bashrc
+      ansible.builtin.copy:
+        src: .bashrc
+        dest: /home/{{ local_username }}/.bashrc
+
+    - name: Set up .bash_profile
+      ansible.builtin.copy:
+        src: .bash_profile
+        dest: /home/{{ local_username }}/.bash_profile
+
+    - name: Set up .xinitrc
+      ansible.builtin.copy:
+        src: .xinitrc
+        dest: /home/{{ local_username }}/.xinitrc
