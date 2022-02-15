@@ -54,6 +54,8 @@
           - telegram-desktop
           - mpv
           - remmina
+          - xorg-x11-server-Xorg
+          - xorg-x11-xinit
           - i3
           - i3status
           - dmenu
