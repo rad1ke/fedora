@@ -48,6 +48,7 @@
           - ImageMagick
           - zip
           - net-tools
+          - dns-utils
           - pwgen
           - qrencode 
           - chromium
