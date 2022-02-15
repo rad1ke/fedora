@@ -31,7 +31,12 @@ fi
 EOT
 chown $LocalUsername:$LocalUsername /home/$LocalUsername/.bash_profile
 
-SYSTEMD_EDITOR=tee systemctl edit --system getty@tty1 < "[Service]\nExecStart=\nExecStart=-/usr/sbin/agetty --autologin $LocalUsername --noclear %I $TERM"
+mkdir -p /etc/systemd/system/getty@tty1.service.d/
+cat <<EOT > /etc/systemd/system/getty@tty1.service.d/override.conf
+[Service]
+ExecStart=
+ExecStart=-/usr/sbin/agetty --autologin $LocalUsername --noclear %I $TERM
+EOT
 
 #gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 #gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag false
