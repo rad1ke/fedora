@@ -33,9 +33,8 @@ chown $LocalUsername:$LocalUsername /home/$LocalUsername/.bash_profile
 
 SYSTEMD_EDITOR=tee systemctl edit --system getty@tty1 < "[Service]\nExecStart=\nExecStart=-/usr/sbin/agetty --autologin $LocalUsername --noclear %I $TERM"
 
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag false
-gsettings set org.gnome.desktop.peripherals.mouse accel-profile adaptive
-gsettings set org.gnome.desktop.interface gtk-theme "Arc-Darker"
-gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
-
+#gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+#gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag false
+#gsettings set org.gnome.desktop.peripherals.mouse accel-profile adaptive
+#gsettings set org.gnome.desktop.interface gtk-theme "Arc-Darker"
+#gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
