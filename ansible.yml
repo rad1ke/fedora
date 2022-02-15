@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   vars:
-    ansible_python_interpreter: /usr/bin/python3
+#    ansible_python_interpreter: /usr/bin/python3
     local_username: user
     git_username: radtkedev
     git_email: mail@radtke.dev
@@ -54,7 +54,7 @@
           - ImageMagick
           - zip
           - net-tools
-          - dns-utils
+          - bind-utils
           - pwgen
           - qrencode 
           - traceroute
@@ -68,7 +68,6 @@
           - telegram-desktop
           - mpv
           - remmina
-          - lpf-spotify-client
         state: present
 
     - name: Install desktop environment
