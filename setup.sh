@@ -5,8 +5,9 @@ grep -qF -- "deltarpm=true" "/etc/dnf/dnf.conf" || echo "deltarpm=true" >> "/etc
 dnf upgrade -y
 
 dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
-dnf install gsettings-desktop-schemas arc-theme papirus-icon-theme sway wofi waybar swayidle swaylock pulseaudio-utils playerctl pavucontrol NetworkManager-tui udiskie wl-clipboard clipman  openconnect -y
+dnf install gsettings-desktop-schemas arc-theme papirus-icon-theme sway wofi waybar swayidle swaylock pulseaudio-utils playerctl pavucontrol NetworkManager-tui udiskie wl-clipboard clipman htop ImageMagick ansible git zip net-tools pwgen qrencode openconnect -y
 
+LocalUsername="user"
 GitUsername="radtkedev"
 GitEmail="mail@radtke.dev"
 
@@ -14,18 +15,21 @@ git config --global init.defaultBranch "master"
 git config --global user.name $GitUsername
 git config --global user.email $GitEmail
 
-cat <<EOT > /home/user/.bashrc
+cat <<EOT > /home/$LocalUsername/.bashrc
 HISTCONTROL=ignorespace
 PS1=`"[Bash] \W > `"
 alias pw=`" pwgen -s 64 | tr -d "\n" | clipman`"
 alias qr=`" qrencode -t ANSI256`"
 EOT
+chown $LocalUsername:$LocalUsername /home/$LocalUsername/.bashrc
 
-cat <<EOT > /home/user/.bash_profile
+cat <<EOT > /home/$LocalUsername/.bash_profile
 . .bashrc
 if [ "$(tty)" = "/dev/tty1" ]; then
 	exec sway
 fi
+EOT
+chown $LocalUsername:$LocalUsername /home/$LocalUsername/.bash_profile
 
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag false
