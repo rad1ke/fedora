@@ -41,7 +41,13 @@
         name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
         state: present
 
-    - name: Install base packages
+    - name: Update all packages
+      dnf:
+        name: "*"
+        state: latest
+        update_cache: true
+
+    - name: Install system utilities
       dnf:
         name: 
           - htop
@@ -51,10 +57,25 @@
           - dns-utils
           - pwgen
           - qrencode 
+          - traceroute
+          - whois
+        state: present
+
+    - name: Install desktop applications
+      dnf:
+        name:
           - chromium
           - telegram-desktop
           - mpv
           - remmina
+          - lpf-spotify-client
+        state: present
+
+    - name: Install desktop environment
+      dnf:
+        name:
+          - i3
+          - i3status
           - xorg-x11-server-Xorg
           - xorg-x11-xinit
           - xinput
@@ -62,21 +83,29 @@
           - xsel
           - xclip
           - setxkbmap
-          - i3
-          - i3status
           - dmenu
           - compton
-          - playerctl
-          - pulseaudio-utils
-          - pavucontrol
-          - NetworkManager
-          - NetworkManager-openconnect
-          - NetworkManager-openconnect-gnome
           - gsettings-desktop-schemas
           - arc-theme
           - papirus-icon-theme
         state: present
-        update_cache: true
+
+    - name: Install media tools
+      dnf:
+        name:
+          - volumeicon
+          - pavucontrol
+          - playerctl
+          - ffmpeg
+        state: present
+
+    - name: Install network utilities
+      dnf:
+        name:
+          - NetworkManager
+          - NetworkManager-openconnect
+          - NetworkManager-openconnect-gnome
+        state: present
 
     - name: Set git username
       become: yes
