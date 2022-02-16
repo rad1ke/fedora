@@ -6,7 +6,6 @@ exec --no-startup-id nm-applet
 exec --no-startup-id udiskie -t &
 exec --no-startup-id setxkbmap de -variant mac
 exec --no-startup-id xset r rate 250 50
-exec --no-startup-id xsetroot -solid "#000000"
 
 floating_modifier $mod
 bindsym $mod+Return exec urxvt
