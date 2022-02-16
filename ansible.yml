@@ -14,8 +14,15 @@
         regexp: "^GRUB_TIMEOUT="
         line: "GRUB_TIMEOUT=1"
 
+    - name: Silence GRUB boot
+      register: grub_cmdline
+      lineinfile:
+        path: /etc/default/grub
+        regexp: "^GRUB_CMDLINE_LINUX="
+        line: "GRUB_CMDLINE_LINUX=\"quiet rd.plymouth=0 plymouth.enable=0 loglevel=3\""
+
     - name: Update GRUB
-      when: grub_timeout.changed
+      when: grub_timeout.changed or grub_cmdline.changed
       shell: "grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg"
 
     - name: Configure dnf
