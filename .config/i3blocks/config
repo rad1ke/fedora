@@ -1,0 +1,6 @@
+separator=true
+separator_block_width=15
+
+[time]
+command=date '+%d.%m.%Y %H:%M:%S'
+interval=1

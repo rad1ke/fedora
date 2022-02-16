@@ -1,0 +1,111 @@
+set $mod Mod4
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+
+exec --no-startup-id picom &
+exec --no-startup-id nm-applet
+exec --no-startup-id udiskie -t &
+exec --no-startup-id setxkbmap de -variant mac
+exec --no-startup-id xset r rate 250 50
+exec --no-startup-id xsetroot -solid "#000000"
+
+floating_modifier $mod
+bindsym $mod+Return exec urxvt
+bindsym $mod+q kill
+bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "Source Code Pro:bold:pixelsize=18"
+
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+odiaeresis focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+odiaeresis move right
+
+bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-msg exit"
+
+mode "resize" {
+  bindsym j resize shrink width 10 px or 10 ppt
+  bindsym k resize grow height 10 px or 10 ppt
+  bindsym l resize shrink height 10 px or 10 ppt
+  bindsym odiaeresis resize grow width 10 px or 10 ppt
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bar {
+  position top
+  font pango:OperatorMono Nerd Font 12
+  status_command i3blocks
+  tray_padding 4
+  separator_symbol "•‎"
+
+  colors {
+    separator  #ffffff
+    background #1f222d
+    statusline #81a1c1
+
+    #                   border  background text
+    focused_workspace  #1f222d #1f222d     #81a1c1
+    active_workspace   #1f222d #252936     #5e81ac
+    inactive_workspace #1f222d #1f222d     #4c566a
+    urgent_workspace   #1f222d #1f222d     #ee829f
+    binding_mode       #1f222d #81a1c1     #2e3440
+  }
+}
+
+#                       border  backgr. text    indicator
+client.focused          #81a1c1 #81a1c1 #ffffff #81a1c1
+client.unfocused        #2e3440 #1f222d #888888 #1f222d
+client.focused_inactive #2e3440 #1f222d #888888 #1f222d
+client.placeholder      #2e3440 #1f222d #888888 #1f222d
+client.urgent           #900000 #900000 #ffffff #900000
+client.background       #242424

@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   vars:
-#    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /usr/bin/python3
     local_username: user
     git_username: radtkedev
     git_email: mail@radtke.dev
@@ -74,7 +74,8 @@
       dnf:
         name:
           - i3
-          - i3status
+          - i3blocks
+          - udiskie
           - xorg-x11-server-Xorg
           - xorg-x11-xinit
           - xinput
@@ -83,8 +84,10 @@
           - xclip
           - setxkbmap
           - dmenu
-          - compton
+          - picom
+          - neovim
           - gsettings-desktop-schemas
+          - xrdb
           - arc-theme
           - papirus-icon-theme
         state: present
@@ -131,10 +134,10 @@
         scope: global
 
     - name: Setup client ssh folder
+      become: yes
+      become_user: "{{ local_username }}"
       ansible.builtin.file:
         path: "/home/{{ local_username }}/.ssh"
-        owner: "{{ local_username }}"
-        group: "{{ local_username }}"
         state: directory
         mode: 0700
 
@@ -172,22 +175,64 @@
           ExecStart=-/sbin/agetty --autologin {{ local_username }} --noclear %I $TERM
 
     - name: Set up .bashrc
+      become: yes
+      become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .bashrc
         dest: /home/{{ local_username }}/.bashrc
-        owner: "{{ local_username }}"
-        group: "{{ local_username }}"
 
     - name: Set up .bash_profile
+      become: yes
+      become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .bash_profile
         dest: /home/{{ local_username }}/.bash_profile
-        owner: "{{ local_username }}"
-        group: "{{ local_username }}"
 
     - name: Set up .xinitrc
+      become: yes
+      become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .xinitrc
         dest: /home/{{ local_username }}/.xinitrc
-        owner: "{{ local_username }}"
-        group: "{{ local_username }}"
+
+    - name: Set up .Xresources
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .Xresources
+        dest: /home/{{ local_username }}/.Xresources
+
+    - name: Set up configuration folder
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        name: /home/{{ local_username }}/.config
+        state: directory
+
+    - name: Set up i3 folder
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        name: /home/{{ local_username }}/.config/i3
+        state: directory
+
+    - name: Set up i3 config
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/i3/config
+        dest: /home/{{ local_username }}/.config/i3/config
+
+    - name: Set up i3blocks folder
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        name: /home/{{ local_username }}/.config/i3blocks
+        state: directory
+
+    - name: Set up i3blocks config
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/i3blocks/config
+        dest: /home/{{ local_username }}/.config/i3blocks/config
