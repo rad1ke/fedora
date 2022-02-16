@@ -109,38 +109,6 @@
           - udiskie
         state: present
 
-    - name: Set git username
-      become: yes
-      become_user: "{{ local_username }}"
-      git_config:
-        name: user.name
-        value: "{{ git_username }}"
-        scope: global
-
-    - name: Set git email
-      become: yes
-      become_user: "{{ local_username }}"
-      git_config:
-        name: user.email
-        value: "{{ git_email }}"
-        scope: global
-
-    - name: Setup git default branch
-      become: yes
-      become_user: "{{ local_username }}"
-      git_config:
-        name: init.defaultBranch
-        value: "{{ git_default_branch }}"
-        scope: global
-
-    - name: Setup client ssh folder
-      become: yes
-      become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        path: "/home/{{ local_username }}/.ssh"
-        state: directory
-        mode: 0700
-
     - name: Configure chrony NTP
       register: chrony
       ansible.builtin.copy:
@@ -173,6 +141,45 @@
           [Service]
           ExecStart=
           ExecStart=-/sbin/agetty --skip-login --nonewline --noissue --autologin {{ local_username }} --noclear %I $TERM
+
+    - name: Remove last login information
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        path: "/home/{{ local_username }}/.hushlogin"
+        state: touch
+
+    - name: Setup client ssh folder
+      become: yes
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        path: "/home/{{ local_username }}/.ssh"
+        state: directory
+        mode: 0700
+
+    - name: Set git username
+      become: yes
+      become_user: "{{ local_username }}"
+      git_config:
+        name: user.name
+        value: "{{ git_username }}"
+        scope: global
+
+    - name: Set git email
+      become: yes
+      become_user: "{{ local_username }}"
+      git_config:
+        name: user.email
+        value: "{{ git_email }}"
+        scope: global
+
+    - name: Setup git default branch
+      become: yes
+      become_user: "{{ local_username }}"
+      git_config:
+        name: init.defaultBranch
+        value: "{{ git_default_branch }}"
+        scope: global
 
     - name: Set up .bashrc
       become: yes
@@ -236,3 +243,5 @@
       ansible.builtin.copy:
         src: .config/i3blocks/config
         dest: /home/{{ local_username }}/.config/i3blocks/config
+
+
