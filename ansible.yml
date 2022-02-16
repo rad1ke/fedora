@@ -172,7 +172,7 @@
         content: |
           [Service]
           ExecStart=
-          ExecStart=-/sbin/agetty --skip-login --autologin {{ local_username }} --noclear %I $TERM
+          ExecStart=-/sbin/agetty --skip-login --nonewline --noissue --autologin {{ local_username }} --noclear %I $TERM
 
     - name: Set up .bashrc
       become: yes
