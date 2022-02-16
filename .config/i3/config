@@ -1,26 +1,32 @@
 set $mod Mod4
+set $left j
+set $down k
+set $up l
+set $right odiaeresis
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 
 exec --no-startup-id picom &
 exec --no-startup-id nm-applet
+exec --no-startup-id gxkb &
+exec --no-startup-id urxvtd -q -f -o
 exec --no-startup-id udiskie -t &
-exec --no-startup-id setxkbmap de -variant mac
+exec --no-startup-id setxkbmap de,ru -variant mac -option 'grp:alt_shift_toggle'
 exec --no-startup-id xset r rate 250 50
 
 floating_modifier $mod
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec urxvtc
 bindsym $mod+q kill
-bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "Source Code Pro:bold:pixelsize=18"
+bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "-misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1"
 
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+odiaeresis focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+odiaeresis move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
 bindsym $mod+h split h
 bindsym $mod+v split v
@@ -65,8 +71,13 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-bindsym $mod+Shift+r restart
+bindsym $mod+Shift+r exec restart
+bindsym $mod+Shift+p exec poweroff
+bindsym $mod+Shift+c restart
 bindsym $mod+Shift+e exec "i3-msg exit"
+
+default_border pixel 2
+default_floating_border pixel 2
 
 mode "resize" {
   bindsym j resize shrink width 10 px or 10 ppt
@@ -82,9 +93,8 @@ bindsym $mod+r mode "resize"
 
 bar {
   position top
-  font pango:OperatorMono Nerd Font 12
   status_command i3blocks
-  tray_padding 4
+  tray_padding 2
   separator_symbol "•‎"
 
   colors {

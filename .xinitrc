@@ -1,11 +1,14 @@
 #!/bin/sh
 . /etc/profile.d/lang.sh
 
+xrdb $HOME/.Xresources
+
+prlcc &
+prlcp &
+
 for file in /etc/X11/xinit/xinitrc.d/* ; do
   . $file
 done
-
-xrdb -load $HOME/.Xresources
 
 if [ -z "$SSH_AGENT" ] && [ -z "$SSH_AUTH_SOCK" ] && [ -z "$SSH_AGENT_PID" ] && [ -x /usr/bin/ssh-agent ]; then
   if [ "x$TMPDIR" != "x" ]; then

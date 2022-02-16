@@ -47,8 +47,8 @@ URxvt*boldFont: -misc-fixed-bold-r-normal--13-120-75-75-C-70-iso10646-1
 URxvt*scrollBar: false
 
 URxvt.perl-ext-common: default,clipboard
-URxvt.keysym.Control-Shift-C: eval:selection_to_clipboard
-URxvt.keysym.Control-Shift-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.clipboard.autocopy: true
 URxvt.iso14755: false
 URxvt.iso14755_52: false

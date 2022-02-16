@@ -1,5 +1,5 @@
 separator=true
-separator_block_width=15
+separator_block_width=20
 
 [time]
 command=date '+%d.%m.%Y %H:%M:%S'

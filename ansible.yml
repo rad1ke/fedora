@@ -75,19 +75,18 @@
         name:
           - i3
           - i3blocks
-          - udiskie
           - xorg-x11-server-Xorg
           - xorg-x11-xinit
           - xinput
           - xkill
           - xsel
+          - xrdb
           - xclip
           - setxkbmap
           - dmenu
           - picom
+          - gxkb
           - neovim
-          - gsettings-desktop-schemas
-          - xrdb
           - arc-theme
           - papirus-icon-theme
         state: present
@@ -101,12 +100,13 @@
           - ffmpeg
         state: present
 
-    - name: Install network utilities
+    - name: Install disk and networking utilities
       dnf:
         name:
           - NetworkManager
           - NetworkManager-openconnect
           - NetworkManager-openconnect-gnome
+          - udiskie
         state: present
 
     - name: Set git username
@@ -172,7 +172,7 @@
         content: |
           [Service]
           ExecStart=
-          ExecStart=-/sbin/agetty --autologin {{ local_username }} --noclear %I $TERM
+          ExecStart=-/sbin/agetty --skip-login --autologin {{ local_username }} --noclear %I $TERM
 
     - name: Set up .bashrc
       become: yes
