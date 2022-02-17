@@ -83,6 +83,7 @@ assign [class="Hexchat"] $ws4
 exec --no-startup-id chromium-browser
 exec --no-startup-id remmina
 exec --no-startup-id hexchat
+exec --no-startup-id urxvtc
 
 default_border pixel 2
 default_floating_border pixel 2
