@@ -76,14 +76,6 @@ bindsym $mod+Shift+p exec poweroff
 bindsym $mod+Shift+c restart
 bindsym $mod+Shift+e exec "i3-msg exit"
 
-assign [class="Chromium"] $ws2
-assign [class="org.remmina.Remmina"] $ws3
-assign [class="Hexchat"] $ws4
-
-exec --no-startup-id chromium-browser --start-fullscreen --disable-session-crashed-bubble --disable-infobars https://google.com/ncr
-exec --no-startup-id remmina
-exec --no-startup-id hexchat
-
 default_border pixel 2
 default_floating_border pixel 2
 
@@ -126,3 +118,11 @@ client.focused_inactive #2e3440 #1f222d #888888 #1f222d
 client.placeholder      #2e3440 #1f222d #888888 #1f222d
 client.urgent           #900000 #900000 #ffffff #900000
 client.background       #242424
+
+assign [class="Chromium"] $ws2
+assign [class="org.remmina.Remmina"] $ws3
+assign [class="Hexchat"] $ws4
+
+exec --no-startup-id chromium-browser --noerrors --disable-session-crashed-bubble --disable-infobars --incognito https://google.com/ncr
+exec --no-startup-id remmina
+exec --no-startup-id hexchat
