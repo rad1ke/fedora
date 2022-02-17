@@ -144,6 +144,7 @@
           - picom
           - gxkb
           - dbus-x11
+          - dunst
           - arc-theme
           - papirus-icon-theme
         state: present
