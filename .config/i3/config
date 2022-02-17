@@ -80,10 +80,9 @@ assign [class="Chromium"] $ws2
 assign [class="org.remmina.Remmina"] $ws3
 assign [class="Hexchat"] $ws4
 
-exec --no-startup-id chromium-browser
+exec --no-startup-id chromium-browser --start-fullscreen --disable-session-crashed-bubble --disable-infobars https://google.com/ncr
 exec --no-startup-id remmina
 exec --no-startup-id hexchat
-exec --no-startup-id urxvtc
 
 default_border pixel 2
 default_floating_border pixel 2
