@@ -122,6 +122,7 @@
           - neovim
           - terminus-fonts
           - terminus-fonts-console
+          - liberation-fonts
           - alsa-lib
           - alsa-utils
         state: present
@@ -203,8 +204,10 @@
         - /home/{{ local_username }}/.config/dunst
         - /home/{{ local_username }}/.config/remmina
         - /home/{{ local_username }}/.config/hexchat
-        - /home/{{ local_username }}/.local/share/nvim/site/autoload
+        - /home/{{ local_username }}/.config/gtk-3.0
+        - /home/{{ local_username }}/.config/gtk-4.0
         - /home/{{ local_username }}/.config/nvim
+        - /home/{{ local_username }}/.local/share/nvim/site/autoload
 
     - name: Download vim-plug
       become_user: "{{ local_username }}"
@@ -299,6 +302,18 @@
         src: .config/hexchat/servlist.conf
         dest: /home/{{ local_username }}/.config/hexchat/servlist.conf
 
+    - name: Set up gtk-3.0
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/gtk-3.0/settings.ini
+        dest: /home/{{ local_username }}/.config/gtk-3.0/settings.ini
+
+    - name: Set up gtk-4.0
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/gtk-4.0/settings.ini
+        dest: /home/{{ local_username }}/.config/gtk-4.0/settings.ini
+
     - name: Set up neovim
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
@@ -308,3 +323,4 @@
     - name: Install neovim plugins
       become_user: "{{ local_username }}"
       ansible.builtin.command: nvim +PlugInstall +qall
+
