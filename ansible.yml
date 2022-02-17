@@ -91,19 +91,9 @@
         state: present
         key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020
 
-    - name: Import RPM Fusion Non-Free key
-      rpm_key:
-        state: present
-        key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-nonfree-fedora-2020
-
     - name: Enable RPM Fusion Free repository
       dnf:
         name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
-        state: present
-
-    - name: Enable RPM Fusion Non-Free repository
-      dnf:
-        name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
         state: present
 
     - name: Update all packages
@@ -130,7 +120,6 @@
       dnf:
         name:
           - chromium
-          - telegram-desktop
           - mpv
           - remmina
         state: present
