@@ -19,6 +19,7 @@ floating_modifier $mod
 bindsym $mod+Return exec --no-startup-id urxvtc
 bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "terminus-12"
+bindsym $mod+n exec --no-startup-id nautilus -w
 
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
