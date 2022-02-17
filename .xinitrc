@@ -1,6 +1,5 @@
 #!/bin/sh
 [[ -f /etc/profile.d/lang.sh ]] && . /etc/profile.d/lang.sh
-
 [[ -f ~/.Xresources ]] && xrdb -load "${HOME}/.Xresources"
 
 for file in /etc/X11/xinit/xinitrc.d/* ; do
