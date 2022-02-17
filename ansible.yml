@@ -86,7 +86,7 @@
           max_parallel_downloads=10
           deltarpm=true
 
-    - name: Important RPM Fusion Free key
+    - name: Import RPM Fusion Free key
       rpm_key:
         state: present
         key: https://rpmfusion.org/keys?action=AttachFile&do=get&target=RPM-GPG-KEY-rpmfusion-free-fedora-2020
