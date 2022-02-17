@@ -139,12 +139,14 @@
           - xsel
           - xrdb
           - xclip
+          - xprop
           - setxkbmap
           - dmenu
           - picom
           - gxkb
           - dbus-x11
           - dunst
+          - nautilus
           - arc-theme
           - papirus-icon-theme
         state: present
