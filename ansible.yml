@@ -114,6 +114,9 @@
           - qrencode 
           - traceroute
           - whois
+          - neovim
+          - terminus-fonts
+          - terminus-fonts-console
         state: present
 
     - name: Install desktop applications
@@ -140,9 +143,7 @@
           - dmenu
           - picom
           - gxkb
-          - neovim
-          - terminus-fonts
-          - terminus-fonts-console
+          - dbus-x11
           - arc-theme
           - papirus-icon-theme
         state: present
