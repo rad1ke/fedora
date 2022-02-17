@@ -301,6 +301,12 @@
         src: .config/hexchat/servlist.conf
         dest: /home/{{ local_username }}/.config/hexchat/servlist.conf
 
+    - name: Set up gtk-2.0
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .gtkrc-2.0
+        dest: /home/{{ local_username }}/.gtkrc-2.0
+
     - name: Set up gtk-3.0
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
