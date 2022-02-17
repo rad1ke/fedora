@@ -8,6 +8,6 @@ done
 
 prlcc &
 prlcp &
-
 SSH_AGENT="/usr/bin/ssh-agent"
+eval $(keychain --eval --agents ssh --quick --quiet)
 exec dbus-launch --sh-syntax --exit-with-session i3

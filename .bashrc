@@ -15,5 +15,3 @@ alias qr=" qrencode -t ANSI256"
 
 shopt -s autocd
 shopt -s checkwinsize
-
-eval $(keychain --eval --agents ssh --quick --quiet)
