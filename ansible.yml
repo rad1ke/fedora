@@ -249,6 +249,18 @@
         src: .config/i3blocks/config
         dest: /home/{{ local_username }}/.config/i3blocks/config
 
+    - name: Set up dunst folder
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        name: /home/{{ local_username }}/.config/dunst
+        state: directory
+
+    - name: Set up dunst config
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/dunst/dunstrc
+        dest: /home/{{ local_username }}/.config/dunst/dunstrc
+
     - name: Set up remmina folder
       become_user: "{{ local_username }}"
       ansible.builtin.file:
