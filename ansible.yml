@@ -125,7 +125,7 @@
           - chromium
           - mpv
           - remmina
-          - weechat
+          - hexchat
         state: present
 
     - name: Install desktop environment
@@ -275,3 +275,21 @@
       ansible.builtin.copy:
         src: .config/remmina/remmina.pref
         dest: /home/{{ local_username }}/.config/remmina/remmina.pref
+
+    - name: Set up hexchat folder
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        name: /home/{{ local_username }}/.config/hexchat
+        state: directory
+
+    - name: Set up hexchat config (1/2)
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/hexchat/hexchat.conf
+        dest: /home/{{ local_username }}/.config/hexchat/hexchat.conf
+
+    - name: Set up hexchat config (2/2)
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/hexchat/servlist.conf
+        dest: /home/{{ local_username }}/.config/hexchat/servlist.conf
