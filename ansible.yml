@@ -102,6 +102,11 @@
         state: latest
         update_cache: true
 
+    - name: Remove pipewire
+      dnf:
+        name: pipewire
+        state: absent
+
     - name: Install system utilities
       dnf:
         name: 
@@ -117,6 +122,8 @@
           - neovim
           - terminus-fonts
           - terminus-fonts-console
+          - alsa-lib
+          - alsa-utils
         state: present
 
     - name: Install desktop applications
