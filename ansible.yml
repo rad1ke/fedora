@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  become: yes
+  become_user: root
   vars:
     ansible_python_interpreter: /usr/bin/python3
     local_username: user
@@ -24,6 +26,13 @@
     - name: Update GRUB
       when: grub_timeout.changed or grub_cmdline.changed
       shell: "grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg"
+
+    - name: Set console font and keymap
+      ansible.builtin.copy:
+        dest: /etc/vconsole.conf
+        content: |
+          KEYMAP="de"
+          FONT="ter-i16n"
 
     - name: Configure dnf
       ansible.builtin.copy:
@@ -94,6 +103,7 @@
           - picom
           - gxkb
           - neovim
+          - terminus-fonts
           - arc-theme
           - papirus-icon-theme
         state: present
@@ -150,14 +160,12 @@
           ExecStart=-/sbin/agetty --skip-login --nonewline --noissue --autologin {{ local_username }} --noclear %I $TERM
 
     - name: Remove last login information
-      become: yes
       become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        path: "/home/{{ local_username }}/.hushlogin"
-        state: touch
+      ansible.builtin.copy:
+        content: ""
+        dest: "/home/{{ local_username }}/.hushlogin"
 
     - name: Setup client ssh folder
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.file:
         path: "/home/{{ local_username }}/.ssh"
@@ -165,7 +173,6 @@
         mode: 0700
 
     - name: Set git username
-      become: yes
       become_user: "{{ local_username }}"
       git_config:
         name: user.name
@@ -173,7 +180,6 @@
         scope: global
 
     - name: Set git email
-      become: yes
       become_user: "{{ local_username }}"
       git_config:
         name: user.email
@@ -181,7 +187,6 @@
         scope: global
 
     - name: Setup git default branch
-      become: yes
       become_user: "{{ local_username }}"
       git_config:
         name: init.defaultBranch
@@ -189,66 +194,67 @@
         scope: global
 
     - name: Set up .bashrc
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .bashrc
         dest: /home/{{ local_username }}/.bashrc
 
     - name: Set up .bash_profile
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .bash_profile
         dest: /home/{{ local_username }}/.bash_profile
 
     - name: Set up .xinitrc
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .xinitrc
         dest: /home/{{ local_username }}/.xinitrc
 
     - name: Set up .Xresources
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .Xresources
         dest: /home/{{ local_username }}/.Xresources
 
     - name: Set up configuration folder
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.file:
         name: /home/{{ local_username }}/.config
         state: directory
 
     - name: Set up i3 folder
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.file:
         name: /home/{{ local_username }}/.config/i3
         state: directory
 
     - name: Set up i3 config
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .config/i3/config
         dest: /home/{{ local_username }}/.config/i3/config
 
     - name: Set up i3blocks folder
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.file:
         name: /home/{{ local_username }}/.config/i3blocks
         state: directory
 
     - name: Set up i3blocks config
-      become: yes
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .config/i3blocks/config
         dest: /home/{{ local_username }}/.config/i3blocks/config
 
+    - name: Set up remmina folder
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        name: /home/{{ local_username }}/.config/remmina
+        state: directory
 
+    - name: Set up remmina config
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/remmina/remmina.pref
+        dest: /home/{{ local_username }}/.config/remmina/remmina.pref

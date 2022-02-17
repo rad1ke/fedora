@@ -3,7 +3,7 @@ set $left j
 set $down k
 set $up l
 set $right odiaeresis
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:Terminus 10
 
 exec --no-startup-id picom &
 exec --no-startup-id nm-applet
@@ -16,7 +16,7 @@ exec --no-startup-id xset r rate 250 50
 floating_modifier $mod
 bindsym $mod+Return exec urxvtc
 bindsym $mod+q kill
-bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "-misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1"
+bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "terminus-12"
 
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down

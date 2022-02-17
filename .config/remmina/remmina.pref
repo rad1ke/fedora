@@ -1,0 +1,13 @@
+[remmina_pref]
+scale_quality=3
+rdp_quality_0=6F
+rdp_quality_1=CD
+rdp_quality_2=81
+rdp_quality_9=180
+disable_tray_icon=true
+hide_searchbar=true
+
+[remmina_news]
+periodic_news_permitted=false
+periodic_rmnews_last_get=0
+periodic_rmnews_get_count=1
