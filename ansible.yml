@@ -34,6 +34,45 @@
           KEYMAP="de"
           FONT="ter-i16n"
 
+    - name: Configure chrony NTP
+      register: chrony
+      ansible.builtin.copy:
+        dest: /etc/chrony.conf
+        content: |
+          pool time.cloudflare.com iburst nts
+          driftfile /var/lib/chrony/drift
+          makestep 1.0 3
+          rtcsync
+          keyfile /etc/chrony.keys
+          ntsdumpdir /var/lib/chrony
+          leapsectz right/UTC
+          logdir /var/log/chrony
+
+    - name: Restart chrony
+      when: chrony.changed
+      ansible.builtin.service:
+        name: chronyd
+        state: restarted
+
+    - name: Set up autologin (1/2)
+      ansible.builtin.file:
+        name: /etc/systemd/system/getty@tty1.service.d
+        state: directory
+
+    - name: Set up autologin (2/2)
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/getty@tty1.service.d/override.conf
+        content: |
+          [Service]
+          ExecStart=
+          ExecStart=-/sbin/agetty --skip-login --nonewline --noissue --autologin {{ local_username }} --noclear %I $TERM
+
+    - name: Remove last login information
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        content: ""
+        dest: "/home/{{ local_username }}/.hushlogin"
+
     - name: Configure dnf
       ansible.builtin.copy:
         dest: /etc/dnf.conf
@@ -125,45 +164,6 @@
           - NetworkManager-openconnect-gnome
           - udiskie
         state: present
-
-    - name: Configure chrony NTP
-      register: chrony
-      ansible.builtin.copy:
-        dest: /etc/chrony.conf
-        content: |
-          pool time.cloudflare.com iburst nts
-          driftfile /var/lib/chrony/drift
-          makestep 1.0 3
-          rtcsync
-          keyfile /etc/chrony.keys
-          ntsdumpdir /var/lib/chrony
-          leapsectz right/UTC
-          logdir /var/log/chrony
-
-    - name: Restart chrony
-      when: chrony.changed
-      ansible.builtin.service:
-        name: chronyd
-        state: restarted
-
-    - name: Set up autologin (1/2)
-      ansible.builtin.file:
-        name: /etc/systemd/system/getty@tty1.service.d
-        state: directory
-
-    - name: Set up autologin (2/2)
-      ansible.builtin.copy:
-        dest: /etc/systemd/system/getty@tty1.service.d/override.conf
-        content: |
-          [Service]
-          ExecStart=
-          ExecStart=-/sbin/agetty --skip-login --nonewline --noissue --autologin {{ local_username }} --noclear %I $TERM
-
-    - name: Remove last login information
-      become_user: "{{ local_username }}"
-      ansible.builtin.copy:
-        content: ""
-        dest: "/home/{{ local_username }}/.hushlogin"
 
     - name: Setup client ssh folder
       become_user: "{{ local_username }}"
