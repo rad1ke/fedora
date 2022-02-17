@@ -9,10 +9,10 @@ exec --no-startup-id picom &
 exec --no-startup-id nm-applet &
 exec --no-startup-id gxkb &
 exec --no-startup-id udiskie -t &
-exec --no-startup-id urxvtd -q -f -o
-exec_always --no-startup-id xmodmap -e "clear lock"
-exec_always --no-startup-id xmodmap -e "keysym Caps_Lock = Escape"
-exec_always --no-startup-id setxkbmap de,ru -variant mac,mac -option "grp:alt_shift_toggle"
+exec --no-startup-id urxvtd -q -f -o; urxvtc
+exec --no-startup-id xmodmap -e "clear lock"
+exec --no-startup-id xmodmap -e "keysym Caps_Lock = Escape"
+exec --no-startup-id setxkbmap de,ru -variant mac,mac -option "grp:alt_shift_toggle"
 exec --no-startup-id xset r rate 250 50
 
 floating_modifier $mod
@@ -78,14 +78,14 @@ bindsym $mod+Shift+p exec poweroff
 bindsym $mod+Shift+c restart
 bindsym $mod+Shift+e exec "i3-msg exit"
 
-default_border pixel 2
-default_floating_border pixel 2
+default_border pixel 0
+default_floating_border pixel 0
 
 mode "resize" {
-  bindsym j resize shrink width 10 px or 10 ppt
-  bindsym k resize grow height 10 px or 10 ppt
-  bindsym l resize shrink height 10 px or 10 ppt
-  bindsym odiaeresis resize grow width 10 px or 10 ppt
+  bindsym $up resize shrink width 10 px or 10 ppt
+  bindsym $left resize grow height 10 px or 10 ppt
+  bindsym $right resize shrink height 10 px or 10 ppt
+  bindsym $down resize grow width 10 px or 10 ppt
   bindsym Return mode "default"
   bindsym Escape mode "default"
   bindsym $mod+r mode "default"
@@ -97,7 +97,7 @@ bar {
   position top
   status_command i3blocks
   tray_padding 2
-  separator_symbol "•‎"
+  separator_symbol "•"
 
   colors {
     separator  #ffffff
