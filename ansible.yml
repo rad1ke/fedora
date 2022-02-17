@@ -178,6 +178,13 @@
         state: directory
         mode: 0700
 
+    - name: Configure ssh
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        dest: /home/{{ local_username }}/.ssh/config
+        content: |
+          AddKeysToAgent yes
+
     - name: Setup configuration directories
       become_user: "{{ local_username }}"
       ansible.builtin.file:
