@@ -142,6 +142,7 @@
           - gxkb
           - neovim
           - terminus-fonts
+          - terminus-fonts-console
           - arc-theme
           - papirus-icon-theme
         state: present
