@@ -147,6 +147,7 @@
           - gxkb
           - dbus-x11
           - dunst
+          - keychain
           - nautilus
           - arc-theme
           - papirus-icon-theme
@@ -176,6 +177,32 @@
         path: "/home/{{ local_username }}/.ssh"
         state: directory
         mode: 0700
+
+    - name: Setup configuration directories
+      become_user: "{{ local_username }}"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /home/{{ local_username }}/.config/i3
+        - /home/{{ local_username }}/.config/i3blocks
+        - /home/{{ local_username }}/.config/dunst
+        - /home/{{ local_username }}/.config/remmina
+        - /home/{{ local_username }}/.config/hexchat
+        - /home/{{ local_username }}/.local/share/nvim/site/autoload
+        - /home/{{ local_username }}/.config/nvim
+
+    - name: Download vim-plug
+      become_user: "{{ local_username }}"
+      get_url:
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: /home/{{ local_username }}/.local/share/nvim/site/autoload/plug.vim
+
+    - name: Set up init.vim
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/nvim/init.vim
+        dest: /home/{{ local_username }}/.bashrc
 
     - name: Set git username
       become_user: "{{ local_username }}"
@@ -222,29 +249,11 @@
         src: .Xresources
         dest: /home/{{ local_username }}/.Xresources
 
-    - name: Set up configuration folder
-      become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        name: /home/{{ local_username }}/.config
-        state: directory
-
-    - name: Set up i3 folder
-      become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        name: /home/{{ local_username }}/.config/i3
-        state: directory
-
     - name: Set up i3 config
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .config/i3/config
         dest: /home/{{ local_username }}/.config/i3/config
-
-    - name: Set up i3blocks folder
-      become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        name: /home/{{ local_username }}/.config/i3blocks
-        state: directory
 
     - name: Set up i3blocks config
       become_user: "{{ local_username }}"
@@ -252,35 +261,17 @@
         src: .config/i3blocks/config
         dest: /home/{{ local_username }}/.config/i3blocks/config
 
-    - name: Set up dunst folder
-      become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        name: /home/{{ local_username }}/.config/dunst
-        state: directory
-
     - name: Set up dunst config
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .config/dunst/dunstrc
         dest: /home/{{ local_username }}/.config/dunst/dunstrc
 
-    - name: Set up remmina folder
-      become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        name: /home/{{ local_username }}/.config/remmina
-        state: directory
-
     - name: Set up remmina config
       become_user: "{{ local_username }}"
       ansible.builtin.copy:
         src: .config/remmina/remmina.pref
         dest: /home/{{ local_username }}/.config/remmina/remmina.pref
-
-    - name: Set up hexchat folder
-      become_user: "{{ local_username }}"
-      ansible.builtin.file:
-        name: /home/{{ local_username }}/.config/hexchat
-        state: directory
 
     - name: Set up hexchat config (1/2)
       become_user: "{{ local_username }}"
@@ -293,3 +284,13 @@
       ansible.builtin.copy:
         src: .config/hexchat/servlist.conf
         dest: /home/{{ local_username }}/.config/hexchat/servlist.conf
+
+    - name: Set up neovim
+      become_user: "{{ local_username }}"
+      ansible.builtin.copy:
+        src: .config/nvim/init.vim
+        dest: /home/{{ local_username }}/.config/nvim/init.vim
+
+    - name: Install neovim plugins
+      become_user: "{{ local_username }}"
+      ansible.builtin.command: nvim +PlugInstall +qall
