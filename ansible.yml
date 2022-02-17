@@ -125,6 +125,7 @@
           - chromium
           - mpv
           - remmina
+          - weechat
         state: present
 
     - name: Install desktop environment
