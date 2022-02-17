@@ -158,7 +158,6 @@
           - keychain
           - nautilus
           - arc-theme
-          - papirus-icon-theme
         state: present
 
     - name: Install media tools
