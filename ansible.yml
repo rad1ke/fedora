@@ -133,7 +133,6 @@
           - chromium
           - mpv
           - remmina
-          - hexchat
         state: present
 
     - name: Install desktop environment
@@ -202,7 +201,6 @@
         - /home/{{ local_username }}/.config/i3blocks
         - /home/{{ local_username }}/.config/dunst
         - /home/{{ local_username }}/.config/remmina
-        - /home/{{ local_username }}/.config/hexchat
         - /home/{{ local_username }}/.config/gtk-3.0
         - /home/{{ local_username }}/.config/gtk-4.0
         - /home/{{ local_username }}/.config/nvim
@@ -288,24 +286,6 @@
       ansible.builtin.copy:
         src: .config/remmina/remmina.pref
         dest: /home/{{ local_username }}/.config/remmina/remmina.pref
-
-    - name: Set up hexchat config (1/2)
-      become_user: "{{ local_username }}"
-      ansible.builtin.copy:
-        src: .config/hexchat/hexchat.conf
-        dest: /home/{{ local_username }}/.config/hexchat/hexchat.conf
-
-    - name: Set up hexchat config (2/2)
-      become_user: "{{ local_username }}"
-      ansible.builtin.copy:
-        src: .config/hexchat/servlist.conf
-        dest: /home/{{ local_username }}/.config/hexchat/servlist.conf
-
-    - name: Set up gtk-2.0
-      become_user: "{{ local_username }}"
-      ansible.builtin.copy:
-        src: .gtkrc-2.0
-        dest: /home/{{ local_username }}/.gtkrc-2.0
 
     - name: Set up gtk-3.0
       become_user: "{{ local_username }}"
