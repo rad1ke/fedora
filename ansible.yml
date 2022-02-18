@@ -102,10 +102,10 @@
         state: latest
         update_cache: true
 
-    - name: Remove pipewire
-      dnf:
-        name: pipewire
-        state: absent
+          #    - name: Remove pipewire
+          #      dnf:
+          #        name: pipewire
+          #        state: absent
 
     - name: Install system utilities
       dnf:
@@ -123,8 +123,8 @@
           - terminus-fonts
           - terminus-fonts-console
           - liberation-fonts
-          - alsa-lib
-          - alsa-utils
+            # - alsa-lib
+            # - alsa-utils
           - mesa-dri-drivers
         state: present
 
