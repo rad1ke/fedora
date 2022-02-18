@@ -181,6 +181,20 @@
           - udiskie
         state: present
 
+    - name: Install ncspot dependencies
+      dnf:
+        name:
+          - cargo
+          - alsa-lib-devel
+          - libxcb-devel
+          - openssl-devel
+          - ncurses-devel
+          - dbus-devel
+        state: present
+
+    - name: Compile ansible with alsa-backend
+      ansible.builtin.command: cargo install ncspot --no-default-features --features alsa_backend,cursive/pancurses-backend
+
     - name: Setup client ssh folder
       become_user: "{{ local_username }}"
       ansible.builtin.file:
