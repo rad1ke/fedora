@@ -125,5 +125,5 @@ client.background       #242424
 assign [class="Chromium"] $ws2
 assign [class="org.remmina.Remmina"] $ws3
 
-exec --no-startup-id chromium-browser --noerrors --disable-session-crashed-bubble --disable-infobars --incognito https://google.com/ncr 2>/home/user/chrome-log
+exec --no-startup-id chromium-browsern --noerrors --disable-session-crashed-bubble --disable-infobars --incognito https://google.com/ncr
 exec --no-startup-id remmina

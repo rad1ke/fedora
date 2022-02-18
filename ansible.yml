@@ -125,6 +125,7 @@
           - liberation-fonts
           - alsa-lib
           - alsa-utils
+          - mesa-dri-drivers
         state: present
 
     - name: Install desktop applications
