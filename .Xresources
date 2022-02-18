@@ -38,9 +38,7 @@
 *.color14: nord7
 *.color15: nord6
 
-Xft.autohint: 0
-Xft.lcdfilter: lcddefault
-Xft.hintstyle: hintfull
+Xft.hintstyle: hintslight
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
