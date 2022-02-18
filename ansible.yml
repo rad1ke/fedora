@@ -104,7 +104,11 @@
 
     - name: Remove pipewire
       dnf:
-        name: pipewire
+        name:
+          - pipewire
+          - pipewire-pulseaudio
+          - pipewire-alsa
+          - wireplumber
         state: absent
 
     - name: Install system utilities
@@ -162,7 +166,7 @@
       dnf:
         name:
           - volumeicon
-          - pavucontrol
+          - alsa-utils
           - playerctl
           - ffmpeg
           - "@Multimedia"
