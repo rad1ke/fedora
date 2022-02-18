@@ -9,4 +9,6 @@ done
 prlcc &
 prlcp &
 
+export PATH="~/.cargo/bin:$PATH"
+
 exec dbus-launch --sh-syntax --exit-with-session i3

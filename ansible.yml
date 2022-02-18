@@ -193,7 +193,7 @@
         state: present
 
     - name: Compile ansible with alsa-backend
-      ansible.builtin.command: cargo install ncspot --no-default-features --features alsa_backend,cursive/pancurses-backend
+      ansible.builtin.command: cargo install ncspot --no-default-features --features alsa_backend,cursive/pancurses-backend,mpris
 
     - name: Setup client ssh folder
       become_user: "{{ local_username }}"
