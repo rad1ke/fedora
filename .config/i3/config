@@ -124,8 +124,6 @@ client.background       #242424
 
 assign [class="Chromium"] $ws2
 assign [class="org.remmina.Remmina"] $ws3
-assign [class="Hexchat"] $ws4
 
-exec --no-startup-id chromium-browser --nogpu --noerrors --disable-session-crashed-bubble --disable-infobars --incognito https://google.com/ncr 2>/home/user/chrome-log
+exec --no-startup-id chromium-browser --noerrors --disable-session-crashed-bubble --disable-infobars --incognito https://google.com/ncr 2>/home/user/chrome-log
 exec --no-startup-id remmina
-exec --no-startup-id hexchat
