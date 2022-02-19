@@ -102,15 +102,6 @@
         state: latest
         update_cache: true
 
-    - name: Remove pipewire
-      dnf:
-        name:
-          - pipewire
-          - pipewire-pulseaudio
-          - pipewire-alsa
-          - wireplumber
-        state: absent
-
     - name: Install system utilities
       dnf:
         name: 
@@ -170,7 +161,22 @@
           - playerctl
           - ffmpeg
           - "@Multimedia"
+        exclude:
+          - pipewire-pulseaudio
+          - pipewire-alsa
+          - pipewire-utils
+          - wireplumber
         state: present
+
+    - name: Remove pipewire
+      dnf:
+        name:
+          - pipewire
+          - pipewire-pulseaudio
+          - pipewire-alsa
+          - wireplumber
+        state: absent
+        autoremove: yes
 
     - name: Install disk and networking utilities
       dnf:
@@ -181,7 +187,13 @@
           - udiskie
         state: present
 
+    - name: Check if ncspot is available
+      register: ncspot
+      stat:
+        path: /usr/local/bin/ncspot
+
     - name: Install ncspot dependencies
+      when: not ncspot.stat.exists
       dnf:
         name:
           - cargo
@@ -192,8 +204,36 @@
           - dbus-devel
         state: present
 
-    - name: Compile ansible with alsa-backend
-      ansible.builtin.command: cargo install ncspot --no-default-features --features alsa_backend,cursive/pancurses-backend,mpris
+    - name: Create ncspot build directory
+      when: not ncspot.stat.exists
+      ansible.builtin.file:
+        path: /tmp/ncspot
+        state: directory
+
+    - name: Pull ncspot repository
+      when: not ncspot.stat.exists
+      ansible.builtin.unarchive:
+        src: https://api.github.com/repos/hrkfdn/ncspot/tarball
+        dest: /tmp/ncspot
+        remote_src: yes
+        extra_opts: [--strip-components=1]
+
+    - name: Compile ncspot with alsa-backend
+      when: not ncspot.stat.exists
+      ansible.builtin.command: cargo build --manifest-path /tmp/ncspot/Cargo.toml --release --no-default-features --features share_clipboard,alsa_backend,mpris,notify,cursive/pancurses-backend
+
+    - name: Copy ncspot binary to /usr/local/bin
+      when: not ncspot.stat.exists
+      ansible.builtin.copy:
+        src: /tmp/ncspot/target/release/ncspot
+        dest: /usr/local/bin/ncspot
+        mode: 755
+
+    - name: Remove ncspot build directory
+      when: not ncspot.stat.exists
+      ansible.builtin.file:
+        path: /tmp/ncspot
+        state: absent
 
     - name: Setup client ssh folder
       become_user: "{{ local_username }}"
