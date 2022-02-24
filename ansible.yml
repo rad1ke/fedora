@@ -136,6 +136,7 @@
           - i3blocks
           - xorg-x11-server-Xorg
           - xorg-x11-xinit
+          - freetype-freeworld
           - xinput
           - xkill
           - xsel
@@ -145,6 +146,7 @@
           - setxkbmap
           - dmenu
           - picom
+          - maim
           - gxkb
           - dbus-x11
           - dunst
@@ -152,6 +154,30 @@
           - nautilus
           - arc-theme
         state: present
+
+    - name: Enable font configurations (1/3) 
+      file:
+        src: /usr/share/fontconfig/conf.avail/10-autohint.conf
+        dest: /etc/fonts/conf.d/10-autohint.conf
+        state: link
+
+    - name: Enable font configurations (2/3) 
+      file:
+        src: /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf
+        dest: /etc/fonts/conf.d/10-sub-pixel-rgb.conf
+        state: link
+
+    - name: Enable font configurations (3/3) 
+      file:
+        src: /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf
+        dest: /etc/fonts/conf.d/11-lcdfilter-default.conf
+        state: link
+
+    - name: Enable font antialiasing in dconf (1/2)
+      ansible.builtin.command: gsettings set org.gnome.desktop.interface font-antialiasing "rgba"
+
+    - name: Enable font antialiasing in dconf (2/2)
+      ansible.builtin.command: gsettings set org.gnome.desktop.interface font-hinting "slight"
 
     - name: Install media tools
       dnf:

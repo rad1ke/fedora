@@ -3,6 +3,7 @@ TERM=xterm
 PS1="[Bash] \W > "
 alias la="ls -la"
 alias i="sudo dnf install"
+alias r="sudo dnf autoremove"
 alias q="sudo dnf search"
 alias u="sudo dnf update"
 alias v="nvim"

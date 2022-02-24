@@ -20,6 +20,7 @@ bindsym $mod+Return exec --no-startup-id urxvtc
 bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "terminus-12"
 bindsym $mod+n exec --no-startup-id nautilus -w
+bindsym $mod+s exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
 
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
@@ -34,9 +35,9 @@ bindsym $mod+Shift+$right move right
 bindsym $mod+h split h
 bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+#bindsym $mod+s layout stacking
+#bindsym $mod+w layout tabbed
+#bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
