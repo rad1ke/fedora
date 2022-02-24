@@ -25,7 +25,7 @@
     font = Terminus 12
     line_height = 0
     markup = full
-    format = "<b>%s</b>\n%b"
+    format = "%b"
     alignment = left
     vertical_alignment = center
     show_age_threshold = 60
@@ -45,7 +45,6 @@
     dmenu = /usr/bin/dmenu -p dunst:
     browser = /usr/bin/xdg-open
     always_run_script = true
-    title = Dunst
     class = Dunst
     corner_radius = 0
     ignore_dbusclose = false
@@ -61,15 +60,18 @@
 [urgency_low]
     background = "#3B4252"
     foreground = "#ECEFF4"
-    timeout = 5
+    timeout = 4
 
 [urgency_normal]
     background = "#3B4252"
     foreground = "#ECEFF4"
-    timeout = 5
+    timeout = 4
 
 [urgency_critical]
     background = "#88C0D0"
     foreground = "#ECEFF4"
     timeout = 0
 
+[chromium]
+summary="*This site has been updated in the background.*"
+format=""
