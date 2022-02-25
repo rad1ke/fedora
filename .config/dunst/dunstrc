@@ -73,5 +73,6 @@
     timeout = 0
 
 [chromium]
-summary="*This site has been updated in the background.*"
-format=""
+message = "*This site has been updated in the background."
+appname = "Chromium"
+format = ""
