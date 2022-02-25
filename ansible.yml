@@ -138,6 +138,7 @@
           - xorg-x11-xinit
           - freetype-freeworld
           - xinput
+          - xmodmap
           - xkill
           - xsel
           - xrdb
