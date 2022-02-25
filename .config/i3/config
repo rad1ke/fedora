@@ -32,7 +32,7 @@ bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
 
-bindsym $mod+h split h
+bindsym $mod+b split h
 bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 #bindsym $mod+s layout stacking
