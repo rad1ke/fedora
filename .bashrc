@@ -13,7 +13,7 @@ alias ga="git add"
 alias gs="git status"
 alias gpush="git push"
 alias gpull="git pull"
-alias pw=" pwgen -s 64 | tr -d '\n' | clipman"
+alias pw=" pwgen -s 64 1 | tr -d '\n' | xclip -selection clipboard"
 alias qr=" qrencode -t ANSI256"
 
 shopt -s autocd
