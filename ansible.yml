@@ -273,6 +273,7 @@
       ansible.builtin.copy:
         dest: /home/{{ local_username }}/.ssh/config
         content: |
+          User root
           AddKeysToAgent yes
 
     - name: Setup configuration directories
