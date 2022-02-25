@@ -127,6 +127,7 @@
           - chromium
           - mpv
           - remmina
+          - gimp
         state: present
 
     - name: Install desktop environment
