@@ -20,14 +20,14 @@ bindsym $mod+Return exec --no-startup-id urxvtc
 bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run -i -nb "#1f222d" -nf "#81a1c1" -sb "#81a1c1" -sf "#1f222d" -fn "terminus-12"
 bindsym $mod+n exec --no-startup-id nautilus -w
-bindsym $mod+s exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
+bindsym $mod+s exec --no-startup-id maim -su | xclip -selection clipboard -t image/png
 
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
 
-bindsym $mod+Shift+$left move left
+bindsym $mod+Control+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
